@@ -1,0 +1,64 @@
+# Valgrind Suppression File for Readline Library
+#
+# This file tells Valgrind to ignore "memory leaks" from the readline library.
+# These are not actual leaks - readline intentionally keeps memory allocated
+# for performance and functionality (command history, line editing, etc.).
+#
+# Usage: valgrind --suppressions=readline.supp --leak-check=full ./minishell
+#
+# Functions suppressed:
+# - readline(): Main input function
+# - add_history(): Command history management
+# - Internal readline functions: rl_*, readline_internal_*, etc.
+#
+# Without this file, Valgrind would report dozens of false positive "leaks"
+# from readline, making it impossible to detect real memory leaks in our code.
+
+{
+    leak readline
+    Memcheck:Leak
+    ...
+    fun:readline
+}
+{
+    leak add_history
+    Memcheck:Leak
+    ...
+    fun:add_history
+}
+{
+    still_reachable xrealloc
+    Memcheck:Leak
+    ...
+    fun:realloc
+}
+{
+    still_reachable rl_extend_line_buffer
+    Memcheck:Leak
+    ...
+    fun:rl_extend_line_buffer
+}
+{
+    still_reachable rl_insert_text
+    Memcheck:Leak
+    ...
+    fun:rl_insert_text
+}
+{
+    still_reachable rl_bracketed_paste_begin
+    Memcheck:Leak
+    ...
+    fun:rl_bracketed_paste_begin
+}
+{
+    still_reachable _rl_dispatch_subseq
+    Memcheck:Leak
+    ...
+    fun:_rl_dispatch_subseq
+}
+{
+    still_reachable readline_internal_char
+    Memcheck:Leak
+    ...
+    fun:readline_internal_char
+}
