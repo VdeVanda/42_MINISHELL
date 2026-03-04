@@ -1,3 +1,7 @@
+*This project has been created as part of the 42 curriculum by vabatist.*
+
+---
+
 # Minishell - Complete Integrated Project
 
 ## Overview
